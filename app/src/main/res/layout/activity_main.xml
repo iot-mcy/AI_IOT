@@ -93,11 +93,11 @@
                 android:onClick="setOnClickByRegister"
                 android:text="注册" />
 
-            <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:onClick="GetDeviceListByUserID"-->
-            <!--android:text="获取用户设备列表" />-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="GetDeviceListByUserID"
+                android:text="获取用户设备列表" />
 
             <Button
                 android:layout_width="wrap_content"

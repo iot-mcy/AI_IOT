@@ -3,7 +3,6 @@ package com.mcy.iot;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +14,7 @@ import com.mcy.iot.base.user.User;
 import com.mcy.iot.base.user.UserService;
 import com.mcy.iot.base.utils.ToastManager;
 import com.mcy.iot.databinding.ActivityMainBinding;
+import com.mcy.iot.device.DeviceService;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.mcy.iot.base.baseEntity.ResponseEntity.SUCCESS_CODE;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding binding;
     public ObservableField<String> data = new ObservableField<>("hello world!");
@@ -123,29 +123,29 @@ public class MainActivity extends AppCompatActivity {
                 }));
     }
 
-//    /**
-//     * 获取用户设备列表
-//     *
-//     * @param view
-//     */
-//    public void GetDeviceListByUserID(View view) {
-//        disposables.add(DeviceService.GetDeviceListByUserID(User.getInstance().getId())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<String>() {
-//                    @Override
-//                    public void accept(String s) throws Exception {
-//                        Log.i("", "");
-//                        data.set(s);
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        Log.i("", "");
-//                        data.set(throwable.getMessage());
-//                    }
-//                }));
-//    }
+    /**
+     * 获取用户设备列表
+     *
+     * @param view
+     */
+    public void GetDeviceListByUserID(View view) {
+        disposables.add(DeviceService.GetDeviceListByUserID(User.getInstance().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.i("", "");
+                        data.set(s);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.i("", "");
+                        data.set(throwable.getMessage());
+                    }
+                }));
+    }
 
 
     /**

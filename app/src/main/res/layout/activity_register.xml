@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".RegisterActivity">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/style_toolbar"
+            app:title="新用户注册" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d_56dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/d_32dp">
+
+            <EditText
+                android:id="@+id/et_phone"
+                style="@style/text_font_16sp_primary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_56dp"
+                android:ems="10"
+                android:hint="@string/hint_name"
+                android:inputType="textPersonName"
+                android:singleLine="true" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_16dp" />
+
+            <EditText
+                android:id="@+id/et_password"
+                style="@style/text_font_16sp_primary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_56dp"
+                android:ems="10"
+                android:hint="@string/hint_password"
+                android:inputType="numberPassword"
+                android:singleLine="true" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_16dp" />
+
+            <EditText
+                android:id="@+id/et_confirmPassword"
+                style="@style/text_font_16sp_primary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_56dp"
+                android:ems="10"
+                android:hint="@string/hint_ConfirmPassword"
+                android:inputType="numberPassword"
+                android:singleLine="true" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_16dp" />
+
+            <Button
+                android:id="@+id/bt_signup"
+                style="@style/text_font_16sp_primary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_48dp"
+                android:onClick="setOnClickBySignUp"
+                android:text="注册" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
