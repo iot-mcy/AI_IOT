@@ -4,13 +4,29 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
+import com.mcy.iot.base.app.Application;
+import com.mcy.iot.base.baseEntity.ResponseEntity;
+import com.mcy.iot.base.rxjava.Disposables;
+import com.mcy.iot.base.user.User;
+import com.mcy.iot.base.user.UserService;
 import com.mcy.iot.databinding.ActivityLoginBinding;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.mcy.iot.base.baseEntity.ResponseEntity.SUCCESS_CODE;
+import static com.mcy.iot.base.user.User.LastSignInAccount;
+import static com.mcy.iot.base.user.User.LastSignInPassword;
 
 public class LoginActivity extends BaseActivity {
 
     private ActivityLoginBinding binding;
+
+    private Disposables disposables = new Disposables();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +35,12 @@ public class LoginActivity extends BaseActivity {
         setToolbarNotNav(binding.toolbar);
         binding.setActivity(this);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        disposables.disposeAll();
+        super.onDestroy();
     }
 
     private boolean verify() {
@@ -53,22 +75,32 @@ public class LoginActivity extends BaseActivity {
     public void setOnClickByLogin(final View view) {
         if (verify()) {
             showLoadDialog("正在登录...");
-//            User user = new User();
-//            user.setUsername(binding.etPhone.getText().toString().trim());
-//            user.setPassword(binding.etPassword.getText().toString().trim());
-//            user.login(new SaveListener<User>() {
-//                @Override
-//                public void done(User user, BmobException e) {
-//                    dismissLoadDialog();
-//                    if (e == null) {
-//                        showHintSnackbar(binding.getRoot(), "登录成功");
-//                        startActivity(new Intent(view.getContext(), MainActivity.class));
-//                        finish();
-//                    } else {
-//                        showHintSnackbar(binding.getRoot(), e.getErrorCode() == 101 ? "用户名或密码错误" : e.toString());
-//                    }
-//                }
-//            });
+            disposables.add(UserService.login(binding.etPhone.getText().toString().trim(),
+                    binding.etPassword.getText().toString().trim())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResponseEntity<User>>() {
+                        @Override
+                        public void accept(ResponseEntity<User> userResponseEntity) throws Exception {
+                            Log.i("", "");
+                            if (userResponseEntity.getStatus() == SUCCESS_CODE) {
+                                User.updateCurrentUser(userResponseEntity.getData());
+                                Application.sharedPreferences()
+                                        .edit()
+                                        .putString(LastSignInAccount, userResponseEntity.getData().getUsername())
+                                        .putString(LastSignInPassword, userResponseEntity.getData().getPassword())
+                                        .apply();
+                                startActivity(new Intent(view.getContext(), MainActivity.class));
+                            }
+                            showHintSnackbar(binding.getRoot(), userResponseEntity.getMsg());
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            dismissLoadDialog();
+                            showHintSnackbar(binding.getRoot(), throwable.getMessage());
+                        }
+                    }));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.mcy.iot.base.app;
 
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,6 +31,8 @@ public class Application extends android.app.Application {
     @Nullable
     private static transient Bundle meta;
 
+    @Nullable
+    private static transient SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate() {
@@ -61,6 +64,16 @@ public class Application extends android.app.Application {
             return EMPTY;
         }
         return meta;
+    }
+
+    @NonNull
+    public static final SharedPreferences sharedPreferences() {
+        if (sharedPreferences == null) {
+            return sharedPreferences = currentApp
+                    .getSharedPreferences(currentApp.getPackageName(), MODE_PRIVATE);
+        } else {
+            return sharedPreferences;
+        }
     }
 
     private void initPush() {

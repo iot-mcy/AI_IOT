@@ -5,11 +5,23 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.mcy.iot.base.baseEntity.ResponseEntity;
+import com.mcy.iot.base.rxjava.Disposables;
+import com.mcy.iot.base.user.User;
+import com.mcy.iot.base.user.UserService;
 import com.mcy.iot.databinding.ActivityRegisterBinding;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.mcy.iot.base.baseEntity.ResponseEntity.SUCCESS_CODE;
 
 public class RegisterActivity extends BaseActivity {
 
     private ActivityRegisterBinding binding;
+
+    private Disposables disposables = new Disposables();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +29,12 @@ public class RegisterActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         setToolbar(binding.toolbar);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        disposables.disposeAll();
+        super.onDestroy();
     }
 
     private boolean verify() {
@@ -62,41 +80,27 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void submit() {
-//        User user = new User();
-////        user.setUsername(binding.etPhone.getText().toString().trim());
-////        user.setPassword(binding.etConfirmPassword.getText().toString().trim());
-////        addSubscription(user.signUp(new SaveListener<User>() {
-////            @Override
-////            public void done(User user, BmobException e) {
-////                dismissLoadDialog();
-////                if (e == null) {
-////                    showHintSnackbar(binding.getRoot(), "注册成功");
-////                    finish();
-////                } else {
-////                    showHintSnackbar(binding.getRoot(), "注册失败");
-////                }
-////            }
-////        }));
-    }
-
-    /**
-     * 查找用户
-     */
-    private void findUser() {
-//        showLoadDialog("正在注册...");
-//        BmobQuery<User> query = new BmobQuery<>();
-//        query.addWhereEqualTo("username", binding.etPhone.getText().toString().trim());
-//        addSubscription(query.findObjects(new FindListener<User>() {
-//            @Override
-//            public void done(List<User> list, BmobException e) {
-//                if (e == null) {
-//                    showHintSnackbar(binding.etPhone, "该用户名已经存在");
-//                    dismissLoadDialog();
-//                } else {
-//                    submit();
-//                }
-//            }
-//        }));
+        showLoadDialog("正在注册...");
+        String username = binding.etPhone.getText().toString();
+        String password = binding.etPassword.getText().toString();
+        disposables.add(UserService.register(username, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResponseEntity<User>>() {
+                    @Override
+                    public void accept(ResponseEntity<User> userResponseEntity) throws Exception {
+                        if (userResponseEntity.getStatus() == SUCCESS_CODE) {
+                            finish();
+                        }
+                        showHintSnackbar(binding.getRoot(), userResponseEntity.getMsg());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        dismissLoadDialog();
+                        showHintSnackbar(binding.getRoot(), throwable.getMessage());
+                    }
+                }));
     }
 
     /**
@@ -104,7 +108,7 @@ public class RegisterActivity extends BaseActivity {
      */
     public void setOnClickBySignUp(View view) {
         if (verify()) {
-            findUser();
+            submit();
         }
     }
 }

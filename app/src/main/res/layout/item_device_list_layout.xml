@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.mcy.iot.device.onenet.OneNETDevice" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d_16dp"
+        android:layout_marginRight="@dimen/d_16dp"
+        android:layout_marginTop="@dimen/d_8dp"
+        android:onClick="@{onClickListener}"
+        android:tag="@{item}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <Space
+                android:layout_width="@dimen/d_16dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d_16dp" />
+
+                <TextView
+                    style="@style/text_font_18sp_primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.title}"
+                    tools:text="台灯" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d_16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.create_time}"
+                    android:textColor="@color/grey600"
+                    android:textSize="@dimen/d_14sp"
+                    tools:text="2018-04-30 17:12:52" />
+            </LinearLayout>
+
+            <CheckBox
+                android:layout_width="@dimen/d_16dp"
+                android:layout_height="@dimen/d_16dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_checked_point_bg"
+                android:button="@null"
+                android:checked="@{item.online}"
+                tools:checked="false" />
+
+            <Space
+                android:layout_width="@dimen/d_16dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</layout>

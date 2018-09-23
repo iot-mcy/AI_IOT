@@ -7,9 +7,7 @@
         </shape>
     </item>
     <item
-        android:bottom="@dimen/d_16dp"
-        android:drawable="@drawable/ic_adb_black_24dp"
-        android:left="@dimen/d_16dp"
-        android:right="@dimen/d_16dp"
-        android:top="@dimen/d_16dp" />
+        android:bottom="@dimen/d_56dp"
+        android:gravity="center|bottom"
+        android:drawable="@drawable/ic_adb_black_24dp"/>
 </layer-list>

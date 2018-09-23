@@ -31,7 +31,9 @@
             android:name="SERVICE_PORT"
             android:value="${SERVICE_PORT}" />
 
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
     </application>

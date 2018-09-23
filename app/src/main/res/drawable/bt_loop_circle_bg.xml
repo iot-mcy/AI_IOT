@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/white" />
+                    <corners android:radius="90dp" />
+                </shape>
+            </item>
+            <item android:bottom="@dimen/d_16dp" android:drawable="@drawable/ic_loop" android:left="@dimen/d_16dp" android:right="@dimen/d_16dp" android:top="@dimen/d_16dp" />
+        </layer-list>
+    </item>
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/grey100" />
+                    <corners android:radius="90dp" />
+                </shape>
+            </item>
+            <item android:bottom="@dimen/d_16dp" android:drawable="@drawable/ic_loop" android:left="@dimen/d_16dp" android:right="@dimen/d_16dp" android:top="@dimen/d_16dp" />
+        </layer-list>
+    </item>
+</selector>

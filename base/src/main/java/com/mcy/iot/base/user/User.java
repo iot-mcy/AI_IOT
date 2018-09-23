@@ -4,6 +4,9 @@ import android.content.Context;
 
 public class User {
 
+    public static final String LastSignInAccount = "LastSignInAccount";
+    public static final String LastSignInPassword = "LastSignInPassword";
+
     private static User instance;
 
     private Context context;

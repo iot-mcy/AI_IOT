@@ -15,9 +15,8 @@ import com.afollestad.materialdialogs.Theme;
 public class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "Debug";
-    protected int total_count = 0;
-    protected int page = 1;
-    protected String per_page = "10";
+    protected int pageNumber = 1;
+    protected int PAGE_SIZE = 10;
 
     protected Intent intent;
 
@@ -58,19 +57,13 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BaseActivity.super.onBackPressed();
             }
         });
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                BaseActivity.super.onBackPressed();
-//            }
-//        });
     }
 
     /**
