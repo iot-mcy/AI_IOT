@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".device.DeviceDetailActivity">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/style_toolbar"
+                app:navigationIcon="@drawable/ic_back" />
+        </android.support.design.widget.AppBarLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d_16dp" />
+
+        <FrameLayout
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible">
+
+            <io.feeeei.circleseekbar.CircleSeekBar
+                android:id="@+id/seek_time"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                app:wheel_can_touch="false"
+                app:wheel_pointer_color="@color/white"
+                app:wheel_pointer_radius="@dimen/d_8dp"
+                app:wheel_reached_color="@color/teala100"
+                app:wheel_reached_width="@dimen/d_20dp"
+                app:wheel_scroll_only_one_circle="true"
+                app:wheel_unreached_color="@color/grey200"
+                app:wheel_unreached_width="@dimen/d_20dp" />
+
+            <Button
+                android:id="@+id/bt_switch"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bt_selector_circle_bg"
+                android:onClick="onSwitch" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/text_font_16sp_primary"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:background="@color/grey50"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:visibility="gone"
+                tools:text="56:21" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d_16dp" />
+
+        <!--<com.dinuscxj.progressbar.CircleProgressBar-->
+            <!--android:id="@+id/circleProgressBar"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="@dimen/d_16dp"-->
+            <!--android:visibility="gone"-->
+            <!--app:background_color="@color/purple100"-->
+            <!--app:progress_background_color="@color/grey300"-->
+            <!--app:progress_end_color="@color/green300"-->
+            <!--app:progress_start_color="@color/green300"-->
+            <!--app:progress_stroke_width="8dp"-->
+            <!--app:progress_text_color="@color/green300"-->
+            <!--app:style="solid_line" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d_88dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/d_8dp">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="@dimen/d_72dp"
+                android:layout_height="@dimen/d_72dp"
+                android:background="@drawable/bt_timing_circle_bg"
+                android:onClick="setOnClickBySwitch" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="@dimen/d_72dp"
+                android:layout_height="@dimen/d_72dp"
+                android:background="@drawable/bt_alarm_circle_bg"
+                android:onClick="setOnClickByTiming" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="@dimen/d_72dp"
+                android:layout_height="@dimen/d_72dp"
+                android:background="@drawable/bt_loop_circle_bg"
+                android:onClick="setOnClickByLoop" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/text_font_16sp_secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="延时打开" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/text_font_16sp_secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="定时控制" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/text_font_16sp_secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="循环定时" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,5 +1,6 @@
 package com.mcy.iot;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
 import android.os.Bundle;
@@ -13,18 +14,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.mcy.iot.adapter.DataBindingAdapter;
+import com.mcy.iot.base.app.Application;
 import com.mcy.iot.base.baseEntity.ResponseEntity;
 import com.mcy.iot.base.rxjava.Disposables;
 import com.mcy.iot.base.user.User;
 import com.mcy.iot.base.user.UserService;
 import com.mcy.iot.databinding.ActivityMainBinding;
 import com.mcy.iot.device.Device;
-import com.mcy.iot.device.DeviceService;
+import com.mcy.iot.device.DeviceDetailActivity;
 import com.mcy.iot.device.onenet.OneNETDevice;
 import com.mcy.iot.device.onenet.OneNETDevices;
+import com.mcy.iot.device.service.DeviceService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
@@ -34,6 +39,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.mcy.iot.base.user.User.LastSignInPassword;
+
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         OnRefreshListener, OnRefreshLoadMoreListener {
@@ -42,6 +49,8 @@ public class MainActivity extends BaseActivity
     public ObservableField<String> data = new ObservableField<>("hello world!");
     private Disposables disposables = new Disposables();
     private DataBindingAdapter<OneNETDevice> adapter = new DataBindingAdapter<>(R.layout.item_device_list_layout, BR.item);
+
+    private boolean canExit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +66,19 @@ public class MainActivity extends BaseActivity
     public void onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        }
+
+        if (canExit) {
             super.onBackPressed();
+        } else {
+            showHintSnackbar(binding.getRoot(), "再次点击返回退出");
+            binding.getRoot().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    canExit = false;
+                }
+            }, 2000);
+            canExit = true;
         }
     }
 
@@ -117,6 +137,9 @@ public class MainActivity extends BaseActivity
         @Override
         public void onClick(View view) {
             // TODO: 2018/9/23
+            OneNETDevice device = (OneNETDevice) view.getTag();
+            startActivity(new Intent(MainActivity.this, DeviceDetailActivity.class)
+                    .putExtra("", device));
         }
     };
 
@@ -227,7 +250,13 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        showHintSnackbar(binding.getRoot(), "敬请期待");
+        switch (id) {
+            case R.id.nav_logout:
+                logout();
+                break;
+            default:
+                break;
+        }
         return true;
     }
 
@@ -245,5 +274,36 @@ public class MainActivity extends BaseActivity
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         pageNumber = 1;
         GetDeviceListByUserID();
+    }
+
+    /**
+     * 退出登录
+     */
+    private void logout() {
+        new MaterialDialog.Builder(this)
+                .title("注销当前登录账号")
+                .titleColor(getResources().getColor(R.color.text_primary))
+                .negativeText("取消")
+                .negativeColor(getResources().getColor(R.color.text_secondary))
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .positiveText("确定")
+                .positiveColor(getResources().getColor(R.color.colorPrimary))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Application.sharedPreferences().edit().remove(LastSignInPassword).apply();
+                        User.updateCurrentUser(new User());
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                })
+                .theme(Theme.LIGHT)
+                .show();
+
     }
 }

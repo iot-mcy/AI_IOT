@@ -91,6 +91,7 @@ public class LoginActivity extends BaseActivity {
                                         .putString(LastSignInPassword, userResponseEntity.getData().getPassword())
                                         .apply();
                                 startActivity(new Intent(view.getContext(), MainActivity.class));
+                                finish();
                             }
                             showHintSnackbar(binding.getRoot(), userResponseEntity.getMsg());
                         }

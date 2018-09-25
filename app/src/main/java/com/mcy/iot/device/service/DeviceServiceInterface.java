@@ -1,7 +1,8 @@
-package com.mcy.iot.device;
+package com.mcy.iot.device.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mcy.iot.base.baseEntity.ResponseEntity;
+import com.mcy.iot.device.Device;
 import com.mcy.iot.device.onenet.OneNETDevices;
 
 import java.util.List;

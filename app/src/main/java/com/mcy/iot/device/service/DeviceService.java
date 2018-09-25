@@ -1,8 +1,9 @@
-package com.mcy.iot.device;
+package com.mcy.iot.device.service;
 
 import com.mcy.iot.base.baseEntity.ResponseEntity;
 import com.mcy.iot.base.service.OneNetServer;
 import com.mcy.iot.base.service.Server;
+import com.mcy.iot.device.Device;
 import com.mcy.iot.device.onenet.OneNETDevices;
 
 import java.util.List;
