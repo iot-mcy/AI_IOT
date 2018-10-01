@@ -27,7 +27,7 @@ android {
             versionName '1.0.0'
             manifestPlaceholders = [
                     VER_TYPE    : 0,// 渠道版本类型号，上传到后台接口进行 版本对比查询
-                    SERVICE_HOST: "192.168.43.35",//服务器 后台数据接口
+                    SERVICE_HOST: "172.16.202.29",//服务器 后台数据接口 192.168.43.35 172.16.202.108
                     SERVICE_PORT: 8080,//服务器 后台数据接口 端口号
             ]
         }

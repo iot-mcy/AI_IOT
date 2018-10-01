@@ -15,6 +15,11 @@ import static android.os.Bundle.EMPTY;
 public class Application extends android.app.Application {
 
     /**
+     * 设备注册时用到
+     */
+    public static final String REGISTER_CODE = "4KpkFdqLFvGrbVVf";
+
+    /**
      * 服务的IP
      */
     @NonNull

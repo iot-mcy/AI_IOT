@@ -171,7 +171,7 @@ public class MainActivity extends BaseActivity
      * 获取用户设备列表
      */
     public void GetDeviceListByUserID() {
-        disposables.add(DeviceService.GetDeviceListByUserID(User.getInstance().getId())
+        disposables.add(DeviceService.getDeviceListByUserID(User.getInstance().getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseEntity<List<Device>>>() {

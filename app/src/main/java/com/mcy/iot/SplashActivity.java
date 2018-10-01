@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
 
-    private boolean isOk = true;
+    private boolean isOk = false;
 
     private Disposables disposables = new Disposables();
 
